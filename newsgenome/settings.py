@@ -2,7 +2,10 @@
 import os
 
 ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
+    ('Caige Nichols', 'caigesn@gmail.com'),
+	('Britton Halle', 'britton.halle@gmail.com'),
+	('Jeremy Pennycook', 'jpennyco@gmail.com'),
+	('Evan Wyloge', 'evan.wyloge@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -54,6 +57,7 @@ INSTALLED_APPS = (
 	'djangocalais',
 	#
 	'newsgenome.newssource',
+	'newsgenome.disambiguator',
 )
 
 TEMPLATE_LOADERS = (

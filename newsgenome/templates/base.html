@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>{% block title %}Project Fidelity - The News Genome Project{% endblock %}</title>
+<link rel="stylesheet" href="{{ MEDIA_URL }}templates/default/style.css" />
+</head>
+<body>
+	<div id="wrap">
+		
+		<header class="header">
+			<div id="logo"><img src="{{ MEDIA_URL }}images/titletext.jpg" /></div>
+			<img src="{{ MEDIA_URL }}images/largegraphic.jpg" />
+		</header>
+	
+	    <nav class="nav">
+	        {% block nav %}
+				<ul id="nav">
+					<li>Home</li>
+					<li>About</li>
+				</ul>
+			{% endblock %}
+	    </nav>
+
+	    <section id="content">
+	        {% block content %}{% endblock %}
+	    </section>
+	
+		<footer class="footer"><img src="{{ MEDIA_URL }}images/footer.jpg" /></footer>
+	</div>
+</body>
+</html>
