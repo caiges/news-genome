@@ -65,9 +65,6 @@ TEMPLATE_DIRS = (
     os.path.join(os.path.dirname(__file__), "templates"),
 )
 
-
-CALAIS_API_KEY = '6nvgqswmsfaeyjgp2dwtc6zf'
-
 try:
 	from local_settings import *
 except ImportError, exp:

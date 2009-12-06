@@ -6,3 +6,4 @@ eggs/*
 parts/*
 .installed.cfg
 .DS_Store
+local_settings.py
