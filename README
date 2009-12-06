@@ -1,0 +1,24 @@
+NOTICE : to get this working i replaced
+parts/svn-extras/django-calais/djangocalais/calaisapi.py ... around line 161
+
+def construct_json_response(self, data):
+	import cjson
+	try:
+	    intermediate_json = cjson.decode(data)
+	except cjson.DecodeError:
+	    print ">>> OpenCalais Error: %s" % data
+	    return {}
+	json_data = self._resolveReferences(intermediate_json)
+	return self._createHierarchy(json_data)
+
+-WITH-
+
+def construct_json_response(self, data):
+	from django.utils import simplejson
+	try:
+	    intermediate_json = simplejson.loads(data)
+	except:
+	    print ">>> OpenCalais Error: %s" % data
+	    return {}
+	json_data = self._resolveReferences(intermediate_json)
+	return self._createHierarchy(json_data)

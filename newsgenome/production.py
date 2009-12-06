@@ -1,0 +1,2 @@
+
+from newsgenome.settings import *
