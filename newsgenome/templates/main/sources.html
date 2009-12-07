@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block subheader %}{% endblock %}
+
+{% block content %}
+	<h2>Select Source</h2>
+
+	<ul>
+		{% for source in sources %}
+			<li><a href="/sources/{{ source.id }}/entries">{{ source.title }}</a> <img src="{{ MEDIA_URL }}images/icons/rss.png" /></li>
+		{% empty %}
+			<li>No sources are available at this time.</li>
+		{% endfor %}
+	</ul>
+	
+	<h3><a href="/" title="Back">Back</a></h3>
+	
+{% endblock %}

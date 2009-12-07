@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load newsgenome %}
+
+{% block subheader %}{% endblock %}
+
+{% block content %}
+
+	<h4>{{ source.title }}</h4>
+	<h2>{{ entry.title }}</h2>
+	
+	{% filter select_calais_entities:entry %}
+		{% autoescape off %}
+			{{ entry.content }}
+		{% endautoescape %}
+	{% endfilter %}
+	
+	<h3><a href="/sources/{{ entry.source.id }}/entries/" title="Entries">Back</a></h3>
+	
+{% endblock %}

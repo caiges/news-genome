@@ -9,8 +9,10 @@
 	<div id="wrap">
 		
 		<header class="header">
-			<div id="logo"><img src="{{ MEDIA_URL }}images/titletext.jpg" /></div>
-			<img src="{{ MEDIA_URL }}images/largegraphic.jpg" />
+			<div id="logo"><a href="/" title="Home"><img src="{{ MEDIA_URL }}images/titletext.jpg" /></a></div>
+			{% block subheader %}
+				<img src="{{ MEDIA_URL }}images/largegraphic.jpg" />
+			{% endblock %}
 		</header>
 	
 	    <nav class="nav">

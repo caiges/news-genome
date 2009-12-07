@@ -58,6 +58,7 @@ INSTALLED_APPS = (
 	#
 	'newsgenome.newssource',
 	'newsgenome.disambiguator',
+	'newsgenome.main',
 )
 
 TEMPLATE_LOADERS = (
