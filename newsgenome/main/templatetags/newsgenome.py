@@ -11,7 +11,7 @@ def select_calais_entities(value, entry):
 	calais_doc = CalaisDocument.objects.get_document_for_object(entry)
 	
 	for entity in calais_doc.entities.all():
-		if(entity.type != 'URL'):
+		if(entity.type.name != 'URL'):
 			value = value.replace(entity.name, '<span class="open-calais-entity">%s</span>' % ( entity.name ))
 		
 	return value
