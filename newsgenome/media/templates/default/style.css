@@ -128,3 +128,14 @@ margin-left: 820px;
 border: 2px solid #FF9900;
 background-color: #9AD2FF;
 }
+
+.disambiguation-list{
+padding-left:5px;
+}
+.disambiguation-item{
+border-bottom:1px solid #ff9900;
+padding-bottom:3px;
+}
+.disambiguation-item-hover{
+background-color:#efefef;
+}

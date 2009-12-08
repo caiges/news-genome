@@ -5,7 +5,16 @@
 {% block subheader %}{% endblock %}
 
 {% block content %}
-
+	<div class="ui-widget" id="save-msg">
+		<div class="ui-state-highlight ui-corner-all" style="padding: 0pt 0.7em; margin-top: 20px;">
+		<p>
+		<span class="ui-icon ui-icon-info" style="float: left; margin-right: 0.3em;"></span>
+		<strong>Thanks!</strong>
+		Your disambiguation selection has been save!
+		</p>
+		</div>
+	</div>
+	
 	<h4>{{ source.title }}</h4>
 	<h2>{{ entry.title }}</h2>
 	
@@ -17,26 +26,54 @@
 	
 	<h3><a href="/sources/{{ entry.source.id }}/entries/" title="Entries">Back</a></h3>
 	
+	<div id="disambiguate_dialog" class="popup_dialog" title="Disambiguate">Searching ...</div>
 {% endblock %}
 
 
 {% block inlinejs %}
 	$(document).ready(function() {
+		$('#save-msg').hide();
 		
    		$('.open-calais-entity').click(function() {
-	    	var excerpt = $(this).html().replace(/^\s+|\s+$/g, '%20');
 			
-			var lookup_uri = 'http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&should-sponge=&query=SELECT++DISTINCT+%3Fs1+AS+%3Fc1%2C%0D%0A+++++++++++%28+bif%3Asearch_excerpt+%0D%0A+++++++++++++%28+bif%3Avector+%0D%0A+++++++++++++++%28+%27'+excerpt+'%27+%29%2C+%0D%0A+++++++++++++++%3Fo1%0D%0A+++++++++++++%29%0D%0A+++++++++++%29+AS+%3Fc2%2C+%0D%0A+++++++++++%3Fsc%2C+%0D%0A+++++++++++%3Frank+%0D%0A+++++WHERE+%7B%0D%0A+++++++++++++%7B%7B+SELECT++%3Fs1%2C+%0D%0A++++++++++++++++++++++++%28%3Fsc+*+3e-1%29+AS+%3Fsc%2C+%0D%0A++++++++++++++++++++++++%3Fo1%2C+%0D%0A++++++++++++++++++++++++%28sql%3Arnk_scale+%28%3CLONG%3A%3AIRI_RANK%3E+%28%3Fs1%29%29%29+AS+%3Frank++%0D%0A++++++++++++++++++WHERE+%7B+%3Fs1++%3Fs1textp++++++%3Fo1+++++++++++++++++++++++++++++.+%0D%0A++++++++++++++++++++++++++%3Fo1++bif%3Acontains++%27%22'+excerpt+'%22%27++%0D%0A+++++++++++++++++++++++++++++++OPTION+%28score+%3Fsc%29+%0D%0A++++++++++++++++++++++++%7D%0D%0A++++++++++++++++++ORDER+BY++DESC+%28%3Fsc+*+3e-1+%2B+sql%3Arnk_scale+%28%3CLONG%3A%3AIRI_RANK%3E+%28%3Fs1%29%29%29++%0D%0A++++++++++++++++++LIMIT+++++15%0D%0A++++++++++++++++++OFFSET++++0+%0D%0A++++++++++++++%7D%7D%0D%0A++++++++++++%7D&format=application%2Fsparql-results%2Bjson&debug=on&timeout=&jsoncallback=?';
-			$.getJSON(lookup_uri, function(data){
-				var bindings = sr.results.bindings;
-				for(i in bindings) {
-				  var binding = bindings[i];
-				  console.log(binding); // a for-loop to print all the bindings
+	    	var excerpt = $(this).html().replace(/\s+/g,'+')
+			
+			$('#disambiguate_dialog').html("Searching for "+excerpt+'...');
+			$('#disambiguate_dialog').dialog('open');
+			
+			$.ajax({
+			   type: "GET",
+			   url: "/disambiguator/search/"+excerpt,
+			   success: function(result){
+				data = JSON.parse(result);
+				
+				var hs = '';
+				for (var i = 0; i < data.length; i++) {
+					hs = hs+"<li class='disambiguation-item' ><a href='#' style='text-decoration:none;' class='save-selection' value='"+data[i]['c1']['value']+"'>"+data[i]['c2']['value']+"</a></li>";
 				}
-							
-			});
+				
+			    $('#disambiguate_dialog').html( "<ul class='disambiguation-list'>"+hs+"</ul>" );
+				if(data.length == 0)
+					$('#disambiguate_dialog').html( "Sorry nothing else found" );
+			   }
+			 });
 			
 	   	});
-	
+		
 	});
+	
+	$('.save-selection').live("click",function() {
+		$('#save-msg').show();
+		$('#disambiguate_dialog').dialog('close');
+	});
+
+	$("#disambiguate_dialog").dialog({
+		bgiframe: true,
+		autoOpen: false,
+		modal: true,
+		minWidth: 400,
+		closeOnEscape : true,
+		resizable : false
+	});
+	
 {% endblock %}

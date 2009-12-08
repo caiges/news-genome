@@ -9,7 +9,7 @@ handler500 # Pyflakes
 urlpatterns = patterns(
     '',
 	(r'^', include('newsgenome.main.urls')),
-	(r'^disambiguator/', include('newsgenome.disambiguator.urls')),
+	(r'^disambiguator/',include('newsgenome.disambiguator.urls')),
     (r'^admin/(.*)', admin.site.root),
     (r'^accounts/login/$', 'django.contrib.auth.views.login'),
 )
