@@ -4,6 +4,8 @@
 <meta charset="utf-8" />
 <title>{% block title %}Project Fidelity - The News Genome Project{% endblock %}</title>
 <link rel="stylesheet" href="{{ MEDIA_URL }}templates/default/style.css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.5.3/jquery-ui.min.js" ></script>
 </head>
 <body>
 	<div id="wrap">
@@ -30,5 +32,8 @@
 	
 		<footer class="footer"><img src="{{ MEDIA_URL }}images/footer.jpg" /></footer>
 	</div>
+	<script type="text/javascript" charset="utf-8">
+		{% block inlinejs %}{% endblock %}
+	</script>
 </body>
 </html>
